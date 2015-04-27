@@ -166,7 +166,9 @@ function DisplayGists(PageNum) {
       for (var k = 0; k < OBJ.length; k++) {
         for (var property in OBJ[k].files) {
           if (OBJ[k].files.hasOwnProperty(property)) {
-            OBJLanguage =OBJ[k].files[property].language;
+            if (OBJ[k].files[property].language) {
+              OBJLanguage =OBJ[k].files[property].language;
+            };
           }
         }
       // Process the filter checkboxes
