@@ -90,10 +90,10 @@ if (blnSuccess) {
       RetVal.codeDetail = this.statusText;
       RetVal.response = this.responseText;
   //RetVal.response = this.response;
-    }
-  }
-  req.send(null);
-  return RetVal;
+}
+}
+req.send(null);
+return RetVal;
 } else {
   return RetVal;
 }
@@ -177,17 +177,17 @@ function DisplayGists(PageNum) {
       if (!ElementSet[0].checked && !ElementSet[1].checked && !ElementSet[2].checked && !ElementSet[3].checked 
         && !IsFavorite(OBJ[k].id)) {
         isMatched = true;
-      }
+    }
 
-      if (isMatched) {
-        OutHTML += '<tr><td class="Fav"><input id="' + OBJ[k].id + '" type="button" value="' + OBJ[k].description 
-        + '" OnClick="SaveFavorite(this)"></td>';
-        OutHTML += '<td><a href="https://api.github.com/gists/' + OBJ[k].id + '" target="_blank">'; 
-        OutHTML += OBJ[k].description + '</a></td><td>' + OBJLanguage + '</td>';
-        OutHTML += '</tr>';
-      }
+    if (isMatched) {
+      OutHTML += '<tr><td class="Fav"><input id="' + OBJ[k].id + '" type="button" value="' + OBJ[k].description 
+      + '" OnClick="SaveFavorite(this)"></td>';
+      OutHTML += '<td><a href="https://api.github.com/gists/' + OBJ[k].id + '" target="_blank">'; 
+      OutHTML += OBJ[k].description + '</a></td><td>' + OBJLanguage + '</td>';
+      OutHTML += '</tr>';
     }
   }
+}
 }
   //Add the OuterHTML to the Display.
   DivSet = document.getElementsByClassName('DisplayTable');
@@ -246,8 +246,8 @@ function GetFavorites() {
 
     for (var i = 0; i <= Favorites.length; i++) {
       OutHTML += '<tr><td><input type="button" OnClick="RemoveFavorite(' + Favorites[0].GistID + ')"></td>';
-        OutHTML += '<td><a href="https://api.github.com/gists/' + Favorites[0].GistID + '" target="_blank">'; 
-        OutHTML += Favorites[0].description + '</a></td></tr>';
+      OutHTML += '<td><a href="https://api.github.com/gists/' + Favorites[0].GistID + '" target="_blank">'; 
+      OutHTML += Favorites[0].description + '</a></td></tr>';
     }
 
     document.getElementByClassName('FavoritesTable').innerHTML = OutHTML;
@@ -268,7 +268,8 @@ function IsFavorite(GistID) {
     if (Favorites[i].GistID == GistID) {
       isMatched = true;
       return isMatched;
-  }
+    }
 
-  return isMatched;
+    return isMatched;
+  }
 }
