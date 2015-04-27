@@ -8,6 +8,10 @@ label.LangChx {
   margin-bottom: 2px;
 }
 
+div.SearchFilter {
+  margin-top: 10px;
+}
+
 div.Buttons {
-  margin-top: 5px;
+  margin-top: 10px;
 }
