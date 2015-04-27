@@ -125,13 +125,13 @@ function StageGists() {
   // Process the Checkboxes
   DivSet = document.getElementsByClassName('LangChx');
   if (DivSet.item(0).hasChildNodes()) {
-    ElementSet = DivSet.item(0).childNodes;
+    //ElementSet = DivSet.item(0).childNodes;
 
-    for (var i = 0; i < ElementSet.length; i++) {
-      if (ElementSet[i].nodeName === 'INPUT') {
-        localStorage.removeItem(ElementSet[i].attributes['name'].value);
-        localStorage.setItem(ElementSet[i].attributes['name'].value,
-          ElementSet[i].checked);
+    for (var i = 0; i < 4; i++) {
+      if (DivSet.item(i).nodeName === 'INPUT') {
+        localStorage.removeItem(DivSet.item(i).attributes['name'].value);
+        localStorage.setItem(DivSet.item(i).attributes['name'].value,
+          DivSet.item(i).checked);
       }
     }
   }
@@ -173,14 +173,14 @@ function DisplayGists(PageNum) {
         }
       // Process the filter checkboxes
       isMatched = false;
-      for (var c = 0; c < ElementSet.length; c++) {
-        if ((OBJLanguage == ElementSet[c].name) && ElementSet[c].checked) {
+      for (var c = 0; c < 4; c++) {
+        if ((OBJLanguage == DivSet.item(c).name) && DivSet.item(c).checked) {
           isMatched = true;
           break;
         }
       }
       // Look for all the checkboxes unchecked.
-      if (!ElementSet[0].checked && !ElementSet[1].checked && !ElementSet[2].checked && !ElementSet[3].checked 
+      if (!DivSet.item(0).checked && !DivSet.item(1).checked && !DivSet.item(2).checked && !DivSet.item(3).checked 
         && !IsFavorite(OBJ[k].id)) {
         isMatched = true;
     }
@@ -251,9 +251,9 @@ function GetFavorites() {
     Favorites = localStorage.getItem('Favorites');
 
     for (var i = 0; i <= Favorites.length; i++) {
-      OutHTML += '<tr><td><input type="button" OnClick="RemoveFavorite(' + Favorites[0].GistID + ')"></td>';
-      OutHTML += '<td><a href="https://api.github.com/gists/' + Favorites[0].GistID + '" target="_blank">'; 
-      OutHTML += Favorites[0].description + '</a></td></tr>';
+      OutHTML += '<tr><td><input type="button" OnClick="RemoveFavorite(' + Favorites[i].GistID + ')"></td>';
+      OutHTML += '<td><a href="https://api.github.com/gists/' + Favorites[i].GistID + '" target="_blank">'; 
+      OutHTML += Favorites[i].description + '</a></td></tr>';
     }
 
     document.getElementByClassName('FavoritesTable').innerHTML = OutHTML;
