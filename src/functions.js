@@ -173,7 +173,7 @@ function DisplayGists(PageNum) {
         }
       // Process the filter checkboxes
       isMatched = false;
-      for (var c = 0; c <= ElementSet.length; c++) {
+      for (var c = 0; c < ElementSet.length; c++) {
         if ((OBJLanguage == ElementSet[c].name) && ElementSet[c].checked) {
           isMatched = true;
           break;
