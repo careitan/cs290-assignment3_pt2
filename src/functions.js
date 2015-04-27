@@ -245,12 +245,16 @@ function RemoveFavorite(GistID) {
 
 function GetFavorites() {
   try {
-    var OutHTML = '<thead><th>Remove</th><th>Description</th></thead>';
+    var OutHTML;
     var Favorites;
-
     Favorites = localStorage.getItem('Favorites');
 
-    for (var i = 0; i <= Favorites.length; i++) {
+    if (Favorites === "") {
+      return;
+    } else {
+     OutHTML = '<thead><th>Remove</th><th>Description</th></thead>';
+     
+     for (var i = 0; i <= Favorites.length; i++) {
       OutHTML += '<tr><td><input type="button" OnClick="RemoveFavorite(' + Favorites[i].GistID + ')"></td>';
       OutHTML += '<td><a href="https://api.github.com/gists/' + Favorites[i].GistID + '" target="_blank">'; 
       OutHTML += Favorites[i].description + '</a></td></tr>';
@@ -258,10 +262,12 @@ function GetFavorites() {
 
     document.getElementByClassName('FavoritesTable').innerHTML = OutHTML;
 
-  } catch (e) {
-    document.getElementById('output').innerHTML =
-    'ERROR - Unable to Get Favorites: ' + e.message;
   }
+
+} catch (e) {
+  document.getElementById('output').innerHTML =
+  'ERROR - Unable to Get Favorites: ' + e.message;
+}
 }
 
 function IsFavorite(GistID) {
