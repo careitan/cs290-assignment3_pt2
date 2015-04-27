@@ -164,7 +164,7 @@ function DisplayGists(PageNum) {
     if (OBJ) {
       for (var k = 0; k < OBJ.length; k++) {
         //var OBJLanguage = OBJ[k].files.item[0].language;
-        var OBJLanguage = OBJ[k].files[1].language;
+        var OBJLanguage = OBJ[k].files[0].language;
 
       // Process the filter checkboxes
       isMatched = false;
