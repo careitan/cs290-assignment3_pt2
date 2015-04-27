@@ -198,9 +198,7 @@ function DisplayGists(PageNum) {
 
 OutHTML += '</table>';
   //Add the OuterHTML to the Display.
-  DivSet = document.getElementsByClassName('DisplayList');
-  DivSet(0).innerHTML = OutHTML;
-
+  document.getElementsByClassName('DisplayList').innerHTML = OutHTML;
   return true;
 }
 
