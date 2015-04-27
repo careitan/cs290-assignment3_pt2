@@ -199,7 +199,7 @@ function DisplayGists(PageNum) {
 OutHTML += '</table>';
   //Add the OuterHTML to the Display.
   DivSet = document.getElementsByClassName('DisplayList');
-  DivSet.innerHTML = OutHTML;
+  DivSet(0).innerHTML = OutHTML;
 
   return true;
 }
