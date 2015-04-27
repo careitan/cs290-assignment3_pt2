@@ -99,13 +99,14 @@ if (blnSuccess) {
 function StageGists() {
   var DivSet;
   var ElementSet;
+  var Pages = 0;
   
   DivSet = document.getElementsByClassName('PageNum');
-    if (DivSet.item(0).hasChildNodes()) {
-      ElementSet = DivSet.item(0).childNodes;
-    }
+  if (DivSet) {
+    Pages = DivSet.item(0).attributes['PageNum'].value;
+  }
 
-  var Return = ajaxRequestGists('GET', ElementSet[0].attributes['PageNum'].value);
+  var Return = ajaxRequestGists('GET', Pages);
 
   if (Return.success) {
     localStorage.setItem('GistOBJ', Return.response);
