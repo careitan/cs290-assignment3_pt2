@@ -106,40 +106,43 @@ function StageGists() {
     Pages = DivSet[0].value;
   }
 
-  var Return = ajaxRequestGists('GET', Pages);
+  // Fetch each page of Gists
+  for (var i = 1; i <= Pages; i++) {
+    var Return = ajaxRequestGists('GET', i);
+    if (Return.success) {
+      localStorage.setItem('GistOBJ' + i, Return.response);
+    } else {
+      var OutErr = document.getElementById('output');
+      OutErr.innerHTML = 'AJAX Call FAILED.<br>';
+      OutErr.innerHTML += 'ERROR CODE: ' + Return.code + '<br>';
+      OutErr.innerHTML += 'ERROR CODE Details: ' + Return.codeDetail + '<br>';
+    }
+  }
 
-  if (Return.success) {
-    localStorage.setItem('GistOBJ', Return.response);
+  // Process the Checkboxes
+  DivSet = document.getElementsByClassName('LangChx');
+  if (DivSet.item(0).hasChildNodes()) {
+    ElementSet = DivSet.item(0).childNodes;
 
-    // Process the Checkboxes
-    DivSet = document.getElementsByClassName('LangChx');
-    if (DivSet.item(0).hasChildNodes()) {
-      ElementSet = DivSet.item(0).childNodes;
-
-      for (var i = 0; i < ElementSet.length; i++) {
-        if (ElementSet[i].nodeName === 'INPUT') {
-          localStorage.removeItem(ElementSet[i].attributes['name'].value);
-          localStorage.setItem(ElementSet[i].attributes['name'].value,
-            ElementSet[i].checked);
-        }
+    for (var i = 0; i < ElementSet.length; i++) {
+      if (ElementSet[i].nodeName === 'INPUT') {
+        localStorage.removeItem(ElementSet[i].attributes['name'].value);
+        localStorage.setItem(ElementSet[i].attributes['name'].value,
+          ElementSet[i].checked);
       }
     }
-
-    DisplayGists();
-  } else {
-    var OutErr = document.getElementById('output');
-    OutErr.innerHTML = 'AJAX Call FAILED.<br>';
-    OutErr.innerHTML += 'ERROR CODE: ' + Return.code + '<br>';
-    OutErr.innerHTML += 'ERROR CODE Details: ' + Return.codeDetail + '<br>';
   }
+  DisplayGists(Pages);
 }
 
-function DisplayGists() {
+function DisplayGists(PageNum) {
   var OBJ;
   var OutHTML = '';
 
+for (var i = 1; i <= PageNum; i++) {
+
   try {
-    OBJ = JSON.parse(localStorage.getItem('GistOBJ'));
+    OBJ = JSON.parse(localStorage.getItem('GistOBJ' + i));
   } catch (e) {
     return false;
   }
@@ -148,7 +151,8 @@ function DisplayGists() {
     OutHTML += '<tr><td class="Fav"><input id="chkbx" type="checkbox"><input id="val" type="hidden"></td>';
 
     OutHTML += '<tr>';
-  };
+  }
+};
 
   return true;
 }
