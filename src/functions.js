@@ -103,7 +103,7 @@ function StageGists() {
   
   DivSet = document.getElementsByClassName('PageNum');
   if (DivSet) {
-    Pages = DivSet.item(0).attributes['PageNum'].value;
+    Pages = DivSet[0].value;
   }
 
   var Return = ajaxRequestGists('GET', Pages);
