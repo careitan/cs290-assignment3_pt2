@@ -62,10 +62,10 @@ if (Type !== 'GET' && Type !== 'POST') {
   RetVal.code = 1;
   RetVal.codeDetail = 'Syntax Error - Populating Type [GET | POST]';
 } else if (Type === 'GET') {
-  req.open('GET', URL, true);
+  req.open('GET', URL, false);
 } else {
 // Setting up for POST
-req.open('POST', URL, true);
+req.open('POST', URL, false);
 req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 }
 
