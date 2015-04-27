@@ -1,4 +1,4 @@
-window.onload = function () {
+window.onload = function() {
   var LSVerf = localStorageExists();
   var OutputBox = document.getElementById('output');
 
