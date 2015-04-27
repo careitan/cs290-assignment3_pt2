@@ -270,6 +270,10 @@ function IsFavorite(GistID) {
 
   Favorites = localStorage.getItem('Favorites');
 
+  if (Favorites === "") {
+    return false;
+  };
+
   for (var i = 0; i <= Favorites.length; i++) {
     if (Favorites[i].GistID == GistID) {
       isMatched = true;
