@@ -148,7 +148,7 @@ function SaveFavorites() {
     var Favorites = new Array(0);
 
     // Process the Checkboxes
-    DivSet = document.getElementsByClassName('WxOptions');
+    DivSet = document.getElementsByClassName('Fav');
 
   } catch (e) {
     document.getElementById('output').innerHTML =
@@ -159,10 +159,8 @@ function SaveFavorites() {
 function GetFavorites() {
   try {
   var Favorites;
-
-
   } catch (e) {
     document.getElementById('output').innerHTML =
     'ERROR - Unable to Get Favorites: ' + e.message;
   }
-}
+};
