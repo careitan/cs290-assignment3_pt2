@@ -92,7 +92,7 @@ if (blnSuccess) {
 }
 
 function StageGists() {
-  var Return = ajaxRequestGists(Get);
+  var Return = ajaxRequestGists('Get');
   var DivSet;
   var ElementSet;
 
