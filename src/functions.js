@@ -82,12 +82,13 @@ if (blnSuccess) {
       RetVal.codeDetail = this.statusText;
       RetVal.response = this.responseText;
   //RetVal.response = this.response;
+    }
+  }
+  req.send(null);
+  return RetVal;
+} else {
+  return RetVal;
 }
-};
-
-req.send(null);
-
-return RetVal;
 }
 
 function StageGists() {
@@ -141,26 +142,26 @@ function DisplayGists() {
   return true;
 }
 
-// function SaveFavorites() {
-//     try {
-//     var DivSet;
-//     var ElementSet;
-//     var Favorites = new Array(0);
+function SaveFavorites() {
+    try {
+    var DivSet;
+    var ElementSet;
+    var Favorites = new Array(0);
 
-//     // Process the Checkboxes
-//     DivSet = document.getElementsByClassName('Fav');
+    // Process the Checkboxes
+    DivSet = document.getElementsByClassName('Fav');
 
-//   } catch (e) {
-//     document.getElementById('output').innerHTML =
-//     'ERROR - Unable to Save Favorites: ' + e.message;
-//   }
-// }
+  } catch (e) {
+    document.getElementById('output').innerHTML =
+    'ERROR - Unable to Save Favorites: ' + e.message;
+  }
+}
 
-// function GetFavorites() {
-//   try {
-//   var Favorites;
-//   } catch (e) {
-//     document.getElementById('output').innerHTML =
-//     'ERROR - Unable to Get Favorites: ' + e.message;
-//   }
-// }
+function GetFavorites() {
+  try {
+  var Favorites;
+  } catch (e) {
+    document.getElementById('output').innerHTML =
+    'ERROR - Unable to Get Favorites: ' + e.message;
+  }
+}
