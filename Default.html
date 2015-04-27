@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+<head>
+  <title>"CS290 Gists Lookup"</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="style.css" type="text/css">
+  <script src="src/functions.js"></script>
+</head>
+<body>
+  <h1>CS 290 Gists Lookup</h1>
+  <hr>
+  <div id="output" class="Output"></div>
+  <form id="input" class="Input" method="get">
+    <div class="PageNumber">
+      <label>Number off Pages of Gists to retrieve (1 - 5): </label>
+      <input type="number" class="PageNum" min=1 max=5 name="PageNum">
+    </div>
+    <div class="SearchFilter">
+      <input type="checkbox" class="LangChx" name="Python">
+      <label>Python</label>
+      <br>
+      <input type="checkbox" class="LangChx" name="JSON">
+      <label>JSON</label>
+      <br>
+      <input type="checkbox" class="LangChx" name="JavaScript">
+      <label>JavaScript</label>
+      <br>
+      <input type="checkbox" class="LangChx" name="SQL">
+      <label>SQL</label>
+      <br>
+    </div>
+    <div class="Buttons">
+      <input type="button" name="Search" value="Search" onclick="Search()">
+    </div>
+  </form>
+<div class="DisplayList">
+  <Table id="DisplayList"></Table>
+</div>
+
+</body>
