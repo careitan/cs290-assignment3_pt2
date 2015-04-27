@@ -146,6 +146,7 @@ function DisplayGists(PageNum) {
   var isMatched = false;
   var DivSet;
   var ElementSet;
+  var OBJLanguage;
 
   // Process the Checkboxes
   DivSet = document.getElementsByClassName('LangChx');
@@ -163,9 +164,11 @@ function DisplayGists(PageNum) {
 
     if (OBJ) {
       for (var k = 0; k < OBJ.length; k++) {
-        //var OBJLanguage = OBJ[k].files.item[0].language;
-        var OBJLanguage = OBJ[k].files[0].language;
-
+        for (var property in OBJ[k].files) {
+          if (OBJ[k].files.hasOwnProperty(property)) {
+            OBJLanguage =OBJ[k].files[property].language;
+          }
+        }
       // Process the filter checkboxes
       isMatched = false;
       for (var c = 0; c <= ElementSet.length; c++) {
