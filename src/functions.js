@@ -196,7 +196,7 @@ function DisplayGists(PageNum) {
 }
 }
   //Add the OuterHTML to the Display.
-  DivSet = document.getElementsByClassName('DisplayTable');
+  DivSet = document.getElementById('DisplayList');
   DivSet.innerHTML = OutHTML;
 
   return true;
@@ -252,15 +252,17 @@ function GetFavorites() {
     if (Favorites === "") {
       return;
     } else {
-     OutHTML = '<thead><th>Remove</th><th>Description</th></thead>';
-     
+     OutHTML = '<table id="FavoritesList" class="FavoritesTable">';
+     OutHTML += '<thead><th>Remove</th><th>Description</th></thead>';
+
      for (var i = 0; i <= Favorites.length; i++) {
       OutHTML += '<tr><td><input type="button" OnClick="RemoveFavorite(' + Favorites[i].GistID + ')"></td>';
       OutHTML += '<td><a href="https://api.github.com/gists/' + Favorites[i].GistID + '" target="_blank">'; 
       OutHTML += Favorites[i].description + '</a></td></tr>';
     }
+    OutHTML += '</table>';
 
-    document.getElementByClassName('FavoritesTable').innerHTML = OutHTML;
+    document.getElementByID('FavoritesList').innerHTML = OutHTML;
 
   }
 
