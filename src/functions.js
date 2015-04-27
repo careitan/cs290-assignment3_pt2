@@ -92,10 +92,27 @@ return RetVal;
 
 function StageGists() {
   var Return = ajaxRequestGists(Get);
+  var DivSet;
+  var ElementSet;
 
   if (Return.success) {
     var OBJ = JSON.parse(Return.success);
     localStorage.setItem('GistOBJ', OBJ);
+
+    // Process the Checkboxes
+    DivSet = document.getElementsByClassName('LangChx');
+    if (DivSet.item(0).hasChildNodes()) {
+      ElementSet = DivSet.item(0).childNodes;
+
+      for (var i = 0; i < ElementSet.length; i++) {
+        if (ElementSet[i].nodeName === 'INPUT') {
+          localStorage.removeItem(ElementSet[i].attributes['name'].value);
+          localStorage.setItem(ElementSet[i].attributes['name'].value,
+            ElementSet[i].checked);
+        }
+      }
+    }
+
     DisplayGists();
   } else {
     var OutErr = document.getElementById('output');
