@@ -9,6 +9,9 @@ window.onload = function() {
     OutputBox.style.font.fontcolor = white;
   } else if (OutputBox !== null) {
     OutputBox.innerHTML = '';
+
+    var Favorites = new Array(0);
+    localStorage.setItem('Favorites', Favorites);
   }
 
 };
@@ -132,51 +135,140 @@ function StageGists() {
       }
     }
   }
+
+  GetFavorites();
   DisplayGists(Pages);
 }
 
 function DisplayGists(PageNum) {
   var OBJ;
-  var OutHTML = '';
+  var OutHTML = '<thead><th>Favorite</th><th>Description</th><th>Language</th></thead>';
+  var isMatched = false;
+  var DivSet;
+  var ElementSet;
 
-for (var i = 1; i <= PageNum; i++) {
-
-  try {
-    OBJ = JSON.parse(localStorage.getItem('GistOBJ' + i));
-  } catch (e) {
-    return false;
+  // Process the Checkboxes
+  DivSet = document.getElementsByClassName('LangChx');
+  if (DivSet.item(0).hasChildNodes()) {
+    ElementSet = DivSet.item(0).childNodes;
   }
 
-  if (OBJ) {
-    OutHTML += '<tr><td class="Fav"><input id="chkbx" type="checkbox"><input id="val" type="hidden"></td>';
+  for (var i = 1; i <= PageNum; i++) {
 
-    OutHTML += '<tr>';
+    try {
+      OBJ = JSON.parse(localStorage.getItem('GistOBJ' + i));
+    } catch (e) {
+      return false;
+    }
+
+    if (OBJ) {
+      for (var k = 0; k < OBJ.length; k++) {
+        var OBJLanguage = OBJ[k].files[0].language;
+
+      // Process the filter checkboxes
+      isMatched = false;
+      for (var c = 0; c <= ElementSet.length; c++) {
+        if ((OBJLanguage == ElementSet[c].name) && ElementSet[c].checked) {
+          isMatched = true;
+          break;
+        }
+      }
+      // Look for all the checkboxes unchecked.
+      if (!ElementSet[0].checked && !ElementSet[1].checked && !ElementSet[2].checked && !ElementSet[3].checked 
+        && !IsFavorite(OBJ[k].id)) {
+        isMatched = true;
+      }
+
+      if (isMatched) {
+        OutHTML += '<tr><td class="Fav"><input id="' + OBJ[k].id + '" type="button" value="' + OBJ[k].description 
+        + '" OnClick="SaveFavorite(this)"></td>';
+        OutHTML += '<td><a href="https://api.github.com/gists/' + OBJ[k].id + '" target="_blank">'; 
+        OutHTML += OBJ[k].description + '</a></td><td>' + OBJLanguage + '</td>';
+        OutHTML += '</tr>';
+      }
+    }
   }
-};
+}
+  //Add the OuterHTML to the Display.
+  DivSet = document.getElementsByClassName('DisplayTable');
+  DivSet.innerHTML = OutHTML;
 
   return true;
 }
 
-function SaveFavorites() {
-    try {
-    var DivSet;
-    var ElementSet;
-    var Favorites = new Array(0);
+function SaveFavorite(Sender) {
+  //http://stackoverflow.com/questions/7880257/javascript-push-multidimensional-array
+  try {
+    var valueToPush = new Array();
+    var Favorites;
 
-    // Process the Checkboxes
-    DivSet = document.getElementsByClassName('Fav');
+    valueToPush['GistID'] = Sender.id;
+    valueToPush['Description'] = Sender.value;
 
+    // Process the button
+    Favorites = localStorage.getItem('Favorites');
+    Favorites.push(valueToPush);
+    localStorage.setItem('Favorites', Favorites);
   } catch (e) {
     document.getElementById('output').innerHTML =
     'ERROR - Unable to Save Favorites: ' + e.message;
   }
 }
 
+function RemoveFavorite(GistID) {
+  //http://solidlystated.com/scripting/javascript-delete-from-array/
+  try
+  {
+    var Favorites;
+
+    // Process the button
+    Favorites = localStorage.getItem('Favorites');
+
+    for (var i = 0; i <= Favorites.length; i++) {
+      if (Favorites[i].GistID == GistID) {
+        Favorites.splice(i,1);
+      }
+    };
+
+    localStorage.setItem('Favorites', Favorites);
+  } catch (e) {
+    document.getElementById('output').innerHTML =
+    'ERROR - Unable to Delete Favorites: ' + e.message;
+  }
+}
+
 function GetFavorites() {
   try {
-  var Favorites;
+    var OutHTML = '<thead><th>Remove</th><th>Description</th></thead>';
+    var Favorites;
+
+    Favorites = localStorage.getItem('Favorites');
+
+    for (var i = 0; i <= Favorites.length; i++) {
+      OutHTML += '<tr><td><input type="button" OnClick="RemoveFavorite(' + Favorites[0].GistID + ')"></td>';
+        OutHTML += '<td><a href="https://api.github.com/gists/' + Favorites[0].GistID + '" target="_blank">'; 
+        OutHTML += Favorites[0].description + '</a></td></tr>';
+    }
+
+    document.getElementByClassName('FavoritesTable').innerHTML = OutHTML;
+
   } catch (e) {
     document.getElementById('output').innerHTML =
     'ERROR - Unable to Get Favorites: ' + e.message;
   }
+}
+
+function IsFavorite(GistID) {
+  var isMatched = false;
+  var Favorites;
+
+  Favorites = localStorage.getItem('Favorites');
+
+  for (var i = 0; i <= Favorites.length; i++) {
+    if (Favorites[i].GistID == GistID) {
+      isMatched = true;
+      return isMatched;
+  }
+
+  return isMatched;
 }
