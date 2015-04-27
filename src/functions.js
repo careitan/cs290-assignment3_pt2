@@ -37,7 +37,7 @@ function localStorageExists() {
   }
 }
 
-function ajaxRequestGists(Type) {
+function ajaxRequestGists(Type, NumPages) {
 // Populating a null RetVal object.
 // https://piazza.com/class/i0j5uszbfur1jw?cid=238
 // Student Johnathan Moore
@@ -61,8 +61,13 @@ if (Type !== 'GET' && Type !== 'POST') {
   RetVal.success = false;
   RetVal.code = 1;
   RetVal.codeDetail = 'Syntax Error - Populating Type [GET | POST]';
+} else if (NumPages < 1 || NumPages > 5) {
+  RetVal.success = false;
+  RetVal.code = 1;
+  RetVal.codeDetail = 'Parameter Error - Number of Pages out of range.';
+  blnSuccess = false;
 } else if (Type === 'GET') {
-  req.open('GET', URL, false);
+  req.open('GET', URL + '?page=' + NumPages, false);
 } else {
 // Setting up for POST
 req.open('POST', URL, false);
@@ -92,13 +97,18 @@ if (blnSuccess) {
 }
 
 function StageGists() {
-  var Return = ajaxRequestGists('GET');
   var DivSet;
   var ElementSet;
+  
+  DivSet = document.getElementsByClassName('PageNum');
+    if (DivSet.item(0).hasChildNodes()) {
+      ElementSet = DivSet.item(0).childNodes;
+    }
+
+  var Return = ajaxRequestGists('GET', ElementSet[0].attributes['PageNum'].value);
 
   if (Return.success) {
-    var OBJ = JSON.parse(Return.response);
-    localStorage.setItem('GistOBJ', OBJ);
+    localStorage.setItem('GistOBJ', Return.response);
 
     // Process the Checkboxes
     DivSet = document.getElementsByClassName('LangChx');
@@ -128,7 +138,7 @@ function DisplayGists() {
   var OutHTML = '';
 
   try {
-    OBJ = localStorage.getItem('GistOBJ');
+    OBJ = JSON.parse(localStorage.getItem('GistOBJ'));
   } catch (e) {
     return false;
   }
