@@ -142,7 +142,7 @@ function StageGists() {
 
 function DisplayGists(PageNum) {
   var OBJ;
-  var OutHTML = '<thead><th>Favorite</th><th>Description</th><th>Language</th></thead>';
+  var OutHTML = '<table id="DisplayList" class="DisplayTable"><thead><th>Favorite</th><th>Description</th><th>Language</th></thead>';
   var isMatched = false;
   var DivSet;
   var ElementSet;
@@ -195,8 +195,10 @@ function DisplayGists(PageNum) {
   }
 }
 }
+
+OutHTML += '</table>';
   //Add the OuterHTML to the Display.
-  DivSet = document.getElementById('DisplayList');
+  DivSet = document.getElementsByClassName('DisplayList');
   DivSet.innerHTML = OutHTML;
 
   return true;
