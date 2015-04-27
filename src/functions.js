@@ -62,10 +62,10 @@ if (Type !== 'GET' && Type !== 'POST') {
   RetVal.code = 1;
   RetVal.codeDetail = 'Syntax Error - Populating Type [GET | POST]';
 } else if (Type === 'GET') {
-  req.open('GET', URL, false);
+  req.open('GET', URL, true);
 } else {
 // Setting up for POST
-req.open('POST', URL, false);
+req.open('POST', URL, true);
 req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 }
 
@@ -97,7 +97,7 @@ function StageGists() {
   var ElementSet;
 
   if (Return.success) {
-    var OBJ = JSON.parse(Return.success);
+    var OBJ = JSON.parse(Return.response);
     localStorage.setItem('GistOBJ', OBJ);
 
     // Process the Checkboxes
